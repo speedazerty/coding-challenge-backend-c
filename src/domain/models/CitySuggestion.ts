@@ -18,6 +18,10 @@ export class CitySuggestion {
     public getLatitude(): number {
         return this.latitude;
     }
+
+    public getScore(): number {
+        return this.score;
+    }
 }
 
 export type CitySuggestionParams = {

@@ -1,12 +1,16 @@
 export class GetSuggestionsCommand {
     private readonly searchTerm: string;
-    private readonly latitude?: string;
-    private readonly longitude?: string;
+    private readonly latitude?: number;
+    private readonly longitude?: number;
 
     constructor(params: GetSuggestionsCommandParams) {
         this.searchTerm = params.searchTerm.toLowerCase();
-        this.latitude = params.latitude || undefined;
-        this.longitude = params.longitude || undefined;
+        this.latitude = params.latitude
+            ? Number.parseFloat(params.latitude)
+            : undefined;
+        this.longitude = params.longitude
+            ? Number.parseFloat(params.longitude)
+            : undefined;
     }
 
     public getSearchTerm() {

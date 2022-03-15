@@ -4,4 +4,5 @@ export const TYPES = {
     GetSuggestionsCommandHandler: Symbol.for('GetSuggestionsCommandHandler'),
     CitySuggestionRepository: Symbol.for('CitySuggestionRepository'),
     PostgresConnectionPool: Symbol.for('PostgresConnectionPool'),
+    DistanceScoringService: Symbol.for('DistanceScoringService'),
 };

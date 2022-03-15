@@ -6,7 +6,8 @@ import { Config } from './config/Config';
 import { InversifyExpressServer } from 'inversify-express-utils';
 import { GetSuggestionsCommandHandler } from './application/GetSuggestionsCommandHandler';
 import { PostgresCitySuggestionRepository } from './infrastructure/domain/models/PostgresCitySuggestionRepository';
-import {Pool} from "pg";
+import { Pool } from 'pg';
+import { RangeBasedDistanceScoringService } from './infrastructure/service/RangeBasedDistanceScoringService';
 
 const kernel = new Container();
 const config = Config.createFromEnvironmentVariables();
@@ -39,5 +40,7 @@ kernel.bind<Pool>(TYPES.PostgresConnectionPool).toDynamicValue(() => {
         user: postgresConfig.user,
     });
 });
+
+kernel.bind(TYPES.DistanceScoringService).to(RangeBasedDistanceScoringService);
 
 export { kernel };

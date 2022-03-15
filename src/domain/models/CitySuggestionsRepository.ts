@@ -9,6 +9,6 @@ export type CitySuggestionFilter = {
     countryCodes: string[];
     maxResults: number;
     searchTerm: string;
-    latitude?: string;
-    longitude?: string;
+    latitude?: number;
+    longitude?: number;
 };
