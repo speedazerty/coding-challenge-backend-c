@@ -1,14 +1,22 @@
 export class CitySuggestion {
     private readonly name: string;
-    private readonly latitude: string;
-    private readonly longitude: string;
+    private readonly latitude: number;
+    private readonly longitude: number;
     private readonly score: number;
 
     constructor(params: CitySuggestionParams) {
         this.name = params.name;
-        this.latitude = params.latitude;
-        this.longitude = params.longitude;
-        this.score = params.score;
+        this.latitude = Number.parseFloat(params.latitude);
+        this.longitude = Number.parseFloat(params.longitude);
+        this.score = Math.round(params.score * 10) / 10;
+    }
+
+    public getLongitude(): number {
+        return this.longitude;
+    }
+
+    public getLatitude(): number {
+        return this.latitude;
     }
 }
 

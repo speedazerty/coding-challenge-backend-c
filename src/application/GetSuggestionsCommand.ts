@@ -4,7 +4,7 @@ export class GetSuggestionsCommand {
     private readonly longitude?: string;
 
     constructor(params: GetSuggestionsCommandParams) {
-        this.searchTerm = params.searchTerm;
+        this.searchTerm = params.searchTerm.toLowerCase();
         this.latitude = params.latitude || undefined;
         this.longitude = params.longitude || undefined;
     }
