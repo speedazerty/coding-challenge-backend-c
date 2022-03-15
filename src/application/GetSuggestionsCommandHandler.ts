@@ -1,23 +1,23 @@
 import { GetSuggestionsCommand } from './GetSuggestionsCommand';
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
+import { TYPES } from '../constants';
+import { CitySuggestionsRepository } from '../domain/models/CitySuggestionsRepository';
+import { CitySuggestion } from '../domain/models/CitySuggestion';
 
 @injectable()
 export class GetSuggestionsCommandHandler {
-    public execute(command: GetSuggestionsCommand): Promise<any> {
-        // TODO fetch data from database
-        return Promise.resolve([
-            {
-                name: 'London, ON, Canada',
-                latitude: '42.98339',
-                longitude: '-81.23304',
-                score: 0.9,
-            },
-            {
-                name: 'London, OH, USA',
-                latitude: '39.88645',
-                longitude: '-83.44825',
-                score: 0.5,
-            },
-        ]);
+    constructor(
+        @inject(TYPES.CitySuggestionRepository)
+        private readonly repository: CitySuggestionsRepository
+    ) {}
+
+    public execute(command: GetSuggestionsCommand): Promise<CitySuggestion[]> {
+        return this.repository.suggestCities({
+            countries: ['CA', 'US'],
+            population: 5000,
+            searchTerm: command.getSearchTerm(),
+            latitude: command.getLatitude(),
+            longitude: command.getLongitude(),
+        });
     }
 }

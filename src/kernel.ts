@@ -5,6 +5,7 @@ import { TYPES } from './constants';
 import { Config } from './config/Config';
 import { InversifyExpressServer } from 'inversify-express-utils';
 import { GetSuggestionsCommandHandler } from './application/GetSuggestionsCommandHandler';
+import { PostgresCitySuggestionRepository } from './infrastructure/domain/models/PostgresCitySuggestionRepository';
 
 const kernel = new Container();
 const config = Config.createFromEnvironmentVariables();
@@ -22,5 +23,9 @@ kernel
 kernel
     .bind(TYPES.GetSuggestionsCommandHandler)
     .to(GetSuggestionsCommandHandler);
+
+kernel
+    .bind(TYPES.CitySuggestionRepository)
+    .to(PostgresCitySuggestionRepository);
 
 export { kernel };
