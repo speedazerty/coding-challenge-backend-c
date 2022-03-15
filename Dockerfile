@@ -11,5 +11,6 @@ FROM dependencies AS develop
 ENV NODE_ENV development
 RUN npm install --silent --depth 0
 COPY . .
+RUN npm run build
 
 CMD ["node", "./build/src/App.js"]

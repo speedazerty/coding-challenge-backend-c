@@ -4,6 +4,8 @@
   "description": "coding challenge in Nodejs",
   "main": "app.js",
   "scripts": {
+    "build": "rm -rf build && tsc",
+    "start": "node ./build/src/App.js",
     "dev": "node src/App.js",
     "test": "./node_modules/mocha/bin/mocha ./test/"
   },
@@ -11,6 +13,10 @@
   "license": "WTFPL",
   "dependencies": {
     "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "typescript": "^4.6.2"
   },
   "engines": {
     "node": "16.14.0"
