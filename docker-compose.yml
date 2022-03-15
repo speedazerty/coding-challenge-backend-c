@@ -9,3 +9,17 @@ services:
     env_file:
       - ./env/city-suggestion-service.env
     command: npm run dev
+    depends_on:
+      - postgresql
+
+  postgresql:
+    build:
+      context: ./data
+      dockerfile: Dockerfile
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "--dbname=readcommend", "--username=postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
