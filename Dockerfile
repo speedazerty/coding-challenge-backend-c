@@ -13,4 +13,4 @@ RUN npm install --silent --depth 0
 COPY . .
 RUN npm run build
 
-CMD ["node", "./build/src/App.js"]
+CMD ["node", "./build/App.js"]
