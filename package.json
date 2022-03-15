@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "build": "rm -rf build && tsc",
-    "start": "node ./build/App.js",
-    "dev": "NODE_ENV=development nodemon --watch src -e ts --exec 'ts-node src/App.ts'",
+    "start": "node ./build/index.js",
+    "dev": "NODE_ENV=development nodemon --watch src -e ts --exec 'ts-node src/index.ts'",
     "lint:fix": "prettier --config .prettierrc.json 'src/**/*.ts' --write",
     "test": "./node_modules/mocha/bin/mocha ./test/"
   },

@@ -1,12 +1,23 @@
 import express from 'express';
+import * as core from 'express-serve-static-core';
 
-const app = express();
-const port = 8080;
+export class App {
+    private readonly app: core.Express;
 
-app.get('/suggestions', (req, res) => {
-    res.json([]);
-});
+    constructor(private readonly port: number) {
+        this.app = express();
+    }
 
-app.listen(port, () => {
-    console.log('Server running at http://127.0.0.1:%d/suggestions', port);
-});
+    public async start(): Promise<void> {
+        this.app.get('/suggestions', (req, res) => {
+            res.json([]);
+        });
+
+        this.app.listen(this.port, () => {
+            console.log(
+                'Server running at http://127.0.0.1:%d/suggestions',
+                this.port
+            );
+        });
+    }
+}
