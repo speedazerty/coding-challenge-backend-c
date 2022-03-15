@@ -1,23 +1,21 @@
 import express from 'express';
 import * as core from 'express-serve-static-core';
+import { InversifyExpressServer } from 'inversify-express-utils';
 
 export class App {
-    private readonly app: core.Express;
-
-    constructor(private readonly port: number) {
-        this.app = express();
-    }
+    constructor(
+        private readonly httpServer: InversifyExpressServer,
+        private readonly port: number
+    ) {}
 
     public async start(): Promise<void> {
-        this.app.get('/suggestions', (req, res) => {
-            res.json([]);
-        });
+        const app = this.httpServer.build();
 
-        this.app.listen(this.port, () => {
-            console.log(
-                'Server running at http://127.0.0.1:%d/suggestions',
-                this.port
-            );
-        });
+        await app.listen(this.port);
+
+        console.log(
+            'Server running at http://127.0.0.1:%d/suggestions',
+            this.port
+        );
     }
 }
