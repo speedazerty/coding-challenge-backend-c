@@ -1,20 +1,29 @@
 {
-  "name": "coding-challenge-backend-c",
+  "name": "coding-challenge-backend-yannick",
   "version": "0.0.0",
   "description": "coding challenge in Nodejs",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "dev": "node src/App.js",
     "test": "./node_modules/mocha/bin/mocha ./test/"
   },
   "author": "",
   "license": "WTFPL",
   "dependencies": {
-    "chai": "^1.9.1",
-    "mocha": "^1.18.2",
-    "supertest": "^0.11.0"
+    "express": "^4.17.3"
   },
   "engines": {
-    "node": "0.10.26"
-  }
+    "node": "16.14.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/busbud/coding-challenge-backend-c.git"
+  },
+  "bugs": {
+    "url": "https://github.com/busbud/coding-challenge-backend-c/issues"
+  },
+  "homepage": "https://github.com/busbud/coding-challenge-backend-c#readme"
 }

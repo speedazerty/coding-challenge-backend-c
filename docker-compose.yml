@@ -1,0 +1,9 @@
+version: "3"
+services:
+  city-suggestion-service:
+    build: ./
+    volumes:
+      - ./:/code
+    ports:
+      - "8080:8080"
+    command: npm run dev
