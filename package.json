@@ -19,6 +19,7 @@
     "inversify-express-utils": "^6.4.3",
     "joi": "^17.6.0",
     "pg": "^8.7.3",
+    "pg-format": "^1.0.4",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
@@ -29,6 +30,7 @@
     "@types/joi": "^17.2.3",
     "@types/mocha": "^9.1.0",
     "@types/pg": "^8.6.5",
+    "@types/pg-format": "^1.0.2",
     "@types/sinon": "^10.0.11",
     "@types/sinon-chai": "^3.2.8",
     "@typescript-eslint/eslint-plugin": "^5.15.0",

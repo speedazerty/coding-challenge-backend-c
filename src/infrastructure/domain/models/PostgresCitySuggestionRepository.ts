@@ -6,6 +6,7 @@ import { CitySuggestion } from '../../../domain/models/CitySuggestion';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../constants';
 import { Pool } from 'pg';
+import format from 'pg-format';
 
 @injectable()
 export class PostgresCitySuggestionRepository
@@ -18,15 +19,16 @@ export class PostgresCitySuggestionRepository
     public async suggestCities(
         filter: CitySuggestionFilter
     ): Promise<CitySuggestion[]> {
-        const query =
-            `select *, ((${
-                filter.searchTerm.length
-            } / cast(length(ascii_name) as decimal) ))  as score
-             from cities where country_code IN ( ${this.getCountryCodeQueryFilter(
-                 filter.countryCodes
-             )} ) ` +
-            `AND population >= ${filter.population} AND LOWER(name) LIKE '%${filter.searchTerm}%' order by score desc, ascii_name asc limit ${filter.maxResults}
-            `;
+        const query = format(
+            'select *, ((%s / cast(length(ascii_name) as decimal) ))  as score ' +
+                'from cities where country_code IN (%L) ' +
+                "AND population >= %s AND LOWER(name) LIKE '%%%s%%' order by score desc, ascii_name asc limit %s",
+            filter.searchTerm.length,
+            filter.countryCodes,
+            filter.population,
+            filter.searchTerm,
+            filter.maxResults
+        );
 
         const result = await this.pool.query<any>(query);
 
