@@ -9,6 +9,8 @@ import { inject } from 'inversify';
 import { TYPES } from '../constants';
 import { GetSuggestionsCommandHandler } from '../application/GetSuggestionsCommandHandler';
 import { GetSuggestionsCommand } from '../application/GetSuggestionsCommand';
+import { RequestValidator } from './middlewares/RequestValidator';
+import { GetSuggestionsSchema } from './validation/getSuggestionsSchema';
 
 @controller('')
 export class SuggestionsController {
@@ -17,7 +19,10 @@ export class SuggestionsController {
         private readonly commandHandler: GetSuggestionsCommandHandler
     ) {}
 
-    @httpGet('/suggestions')
+    @httpGet(
+        '/suggestions',
+        RequestValidator.getMiddleware(GetSuggestionsSchema.getSchema())
+    )
     private async getSuggestions(
         @request() req: express.Request,
         @response() res: express.Response
