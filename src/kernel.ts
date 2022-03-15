@@ -4,6 +4,7 @@ import { App } from './App';
 import { TYPES } from './constants';
 import { Config } from './config/Config';
 import { InversifyExpressServer } from 'inversify-express-utils';
+import { GetSuggestionsCommandHandler } from './application/GetSuggestionsCommandHandler';
 
 const kernel = new Container();
 const config = Config.createFromEnvironmentVariables();
@@ -17,5 +18,9 @@ kernel
                 config.values.app.port
             )
     );
+
+kernel
+    .bind(TYPES.GetSuggestionsCommandHandler)
+    .to(GetSuggestionsCommandHandler);
 
 export { kernel };
