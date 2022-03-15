@@ -13,8 +13,9 @@ export class GetSuggestionsCommandHandler {
 
     public execute(command: GetSuggestionsCommand): Promise<CitySuggestion[]> {
         return this.repository.suggestCities({
-            countries: ['CA', 'US'],
+            countryCodes: ['CA', 'US'],
             population: 5000,
+            maxResults: 10,
             searchTerm: command.getSearchTerm(),
             latitude: command.getLatitude(),
             longitude: command.getLongitude(),

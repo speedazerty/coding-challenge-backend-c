@@ -19,6 +19,15 @@ export class Config {
             app: {
                 port: +env('APP_PORT'),
             },
+            database: {
+                citySuggestionPostgres: {
+                    user: env('POSTGRES_USER'),
+                    host: env('POSTGRES_HOST'),
+                    databaseName: env('POSTGRES_DB_NAME'),
+                    password: env('POSTGRES_PASSWORD'),
+                    port: +env('POSTGRES_PORT'),
+                },
+            },
         });
     }
 }

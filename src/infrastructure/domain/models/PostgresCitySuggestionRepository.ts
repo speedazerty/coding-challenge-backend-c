@@ -3,30 +3,39 @@ import {
     CitySuggestionsRepository,
 } from '../../../domain/models/CitySuggestionsRepository';
 import { CitySuggestion } from '../../../domain/models/CitySuggestion';
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
+import { TYPES } from '../../../constants';
+import { Pool } from 'pg';
 
 @injectable()
 export class PostgresCitySuggestionRepository
     implements CitySuggestionsRepository
 {
+    constructor(
+        @inject(TYPES.PostgresConnectionPool) private readonly pool: Pool
+    ) {}
+
     public async suggestCities(
         filter: CitySuggestionFilter
     ): Promise<CitySuggestion[]> {
-        // TODO query the database and use the filter
+        // TODO improve query based on ts_query
+        const query =
+            `select * from cities where country_code IN ( 'CA', 'US' ) ` +
+            `AND population >= ${filter.population} limit ${filter.maxResults}`;
+        const result = await this.pool.query<any>(query);
 
-        return Promise.resolve([
-            new CitySuggestion({
-                name: 'London, ON, Canada',
-                latitude: '42.98339',
-                longitude: '-81.23304',
-                score: 0.9,
-            }),
-            new CitySuggestion({
-                name: 'London, OH, USA',
-                latitude: '39.88645',
-                longitude: '-83.44825',
-                score: 0.5,
-            }),
-        ]);
+        return this.buildSuggestionResult(result.rows);
+    }
+
+    private buildSuggestionResult(rows: any[]): CitySuggestion[] {
+        return rows.map(
+            (row) =>
+                new CitySuggestion({
+                    name: `${row.name}, ${row.country_code}`,
+                    longitude: row.longitude,
+                    latitude: row.latitude,
+                    score: 0,
+                })
+        );
     }
 }

@@ -6,7 +6,8 @@ export interface CitySuggestionsRepository {
 
 export type CitySuggestionFilter = {
     population: number;
-    countries: string[];
+    countryCodes: string[];
+    maxResults: number;
     searchTerm: string;
     latitude?: string;
     longitude?: string;

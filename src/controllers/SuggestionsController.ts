@@ -39,6 +39,7 @@ export class SuggestionsController {
             res.json({ suggestions: suggestions });
         } catch (e) {
             // TODO use a logger and log the trace ID
+            console.error(e);
             res.status(500).send('An unexpected error occurred');
         }
     }
