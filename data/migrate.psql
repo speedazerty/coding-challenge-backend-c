@@ -20,6 +20,8 @@ create table cities (
 	modification_date date
 );
 
+CREATE INDEX city_search_idx ON cities (country_code, population, ascii_name);
+
 copy cities (geoname_id ,name ,ascii_name ,alternate_names ,latitude,longitude ,feature_class ,feature_code ,country_code,cc2 ,admin1 ,admin2 ,admin3 ,admin4 ,population ,elevation ,dem ,timezone ,modification_date) FROM '/docker-entrypoint-initdb.d/cities_canada-usa.tsv' quote E'\u0007' DELIMITER E'\t' CSV HEADER;
 
 
