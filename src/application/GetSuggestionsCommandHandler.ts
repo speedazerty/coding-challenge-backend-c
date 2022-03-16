@@ -17,6 +17,8 @@ export class GetSuggestionsCommandHandler {
     public async execute(
         command: GetSuggestionsCommand
     ): Promise<CitySuggestion[]> {
+        // TODO retrieve previous suggestion for the same filter from cache
+
         let citySuggestions = await this.repository.suggestCities({
             countryCodes: ['CA', 'US'],
             population: 5000,
@@ -34,6 +36,8 @@ export class GetSuggestionsCommandHandler {
                     command.getLongitude() as number
                 );
         }
+
+        // TODO persist to cache the result of the suggestion
 
         return citySuggestions;
     }
