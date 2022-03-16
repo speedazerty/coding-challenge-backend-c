@@ -8,7 +8,9 @@
     "start": "node ./build/index.js",
     "dev": "NODE_ENV=development nodemon --watch src -e ts --exec 'ts-node src/index.ts'",
     "lint:fix": "prettier --config .prettierrc.json 'src/**/*.ts' --write",
-    "test:unit": "NODE_ENV=dev mocha --require ts-node/register --full-trace \"tests/unit/**/*.test.ts\" || exit 1"
+    "test": "npm run test:unit && npm run test:functional",
+    "test:unit": "NODE_ENV=dev mocha --require ts-node/register --full-trace \"tests/unit/**/*.test.ts\" || exit 1",
+    "test:functional": "NODE_ENV=dev mocha --require ts-node/register --full-trace \"tests/functional/**/*.test.ts\" || exit 1"
   },
   "author": "",
   "license": "WTFPL",
@@ -33,6 +35,7 @@
     "@types/pg-format": "^1.0.2",
     "@types/sinon": "^10.0.11",
     "@types/sinon-chai": "^3.2.8",
+    "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.15.0",
     "@typescript-eslint/parser": "^5.15.0",
     "chai": "^4.3.6",
@@ -44,6 +47,7 @@
     "prettier-eslint": "^13.0.0",
     "sinon": "^13.0.1",
     "sinon-chai": "^3.7.0",
+    "supertest": "^6.2.2",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.2"
   },

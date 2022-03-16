@@ -22,7 +22,7 @@ export class PostgresCitySuggestionRepository
         const query = format(
             'select *, ((%s / cast(length(ascii_name) as decimal) ))  as score ' +
                 'from cities where country_code IN (%L) ' +
-                "AND population >= %s AND LOWER(name) LIKE '%%%s%%' order by score desc, ascii_name asc limit %s",
+                "AND population >= %s AND LOWER(ascii_name) LIKE '%%%s%%' order by score desc, ascii_name asc limit %s",
             filter.searchTerm.length,
             filter.countryCodes,
             filter.population,
@@ -49,7 +49,7 @@ export class PostgresCitySuggestionRepository
         return rows.map(
             (row) =>
                 new CitySuggestion({
-                    name: `${row.name}, ${this.getStateCode(row)}, ${
+                    name: `${row.ascii_name}, ${this.getStateCode(row)}, ${
                         row.country_code
                     }`,
                     longitude: row.longitude,

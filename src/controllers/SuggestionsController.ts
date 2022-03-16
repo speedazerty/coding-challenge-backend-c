@@ -36,7 +36,12 @@ export class SuggestionsController {
 
             const suggestions = await this.commandHandler.execute(command);
 
-            res.json({ suggestions: suggestions });
+            if (suggestions.length === 0) {
+                console.log();
+                res.status(404).json({ suggestions: [] });
+            } else {
+                res.json({ suggestions: suggestions });
+            }
         } catch (e) {
             // TODO use a logger and log the trace ID
             console.error(e);

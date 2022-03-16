@@ -13,6 +13,8 @@ export class GetSuggestionsSchema {
                 .messages({
                     'any.unknown':
                         'Latitude and Longitude must be provided together or none of them',
+                    'any.required':
+                        'Latitude and Longitude must be provided together or none of them',
                 }),
             longitude: Joi.number().optional(),
         });

@@ -9,6 +9,9 @@ import { PostgresCitySuggestionRepository } from './infrastructure/domain/models
 import { Pool } from 'pg';
 import { RangeBasedDistanceScoringService } from './infrastructure/service/RangeBasedDistanceScoringService';
 
+// load controllers metadata
+import './controllers/SuggestionsController';
+
 const kernel = new Container();
 const config = Config.createFromEnvironmentVariables();
 
