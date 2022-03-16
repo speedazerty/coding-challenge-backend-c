@@ -64,7 +64,9 @@ The base score of the suggestion is depends on the number of characters of the s
 the number of matching characters of the results.
 
 If coordinates are specified, I calculate a distance score. 
-Then I do an average with the base score and the distance score to improve the score results.      
+This distance score simply decrease the base score depending on how far the 
+specified position is from each suggested cities. Then, it is this distance score 
+which is used as the final score.  
 
 ### Performance
 
