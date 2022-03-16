@@ -36,11 +36,7 @@ kernel
 const postgresConfig = config.values.database.citySuggestionPostgres;
 kernel.bind<Pool>(TYPES.PostgresConnectionPool).toDynamicValue(() => {
     return new Pool({
-        port: postgresConfig.port,
-        database: postgresConfig.databaseName,
-        host: postgresConfig.host,
-        password: postgresConfig.password,
-        user: postgresConfig.user,
+        connectionString: postgresConfig.connectionString,
     });
 });
 

@@ -5,11 +5,7 @@ export interface ConfigValues {
 
     database: {
         citySuggestionPostgres: {
-            user: string;
-            host: string;
-            databaseName: string;
-            password: string;
-            port: number;
+            connectionString: string;
         };
     };
 }
