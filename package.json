@@ -2,7 +2,7 @@
   "name": "coding-challenge-backend-yannick",
   "version": "0.0.0",
   "description": "coding challenge in Nodejs",
-  "main": "app.js",
+  "main": "./build/index.js",
   "scripts": {
     "build": "rm -rf build && tsc",
     "start": "node ./build/index.js",
