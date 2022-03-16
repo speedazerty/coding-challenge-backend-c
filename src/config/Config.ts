@@ -17,7 +17,7 @@ export class Config {
     public static createFromEnvironmentVariables(): Config {
         return new Config({
             app: {
-                port: +env('APP_PORT'),
+                port: +env('PORT'),
             },
             database: {
                 citySuggestionPostgres: {
