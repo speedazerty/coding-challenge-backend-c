@@ -25,13 +25,12 @@ export class RangeBasedDistanceScoringService
                             longitude: suggestion.getLongitude(),
                         }
                     ) / 1000;
-                const distanceScore = this.getDistanceScore(distance);
+                const distanceScore = this.getDistanceScore(
+                    distance,
+                    suggestion.getScore()
+                );
 
-                // calculate the average score
-                (suggestion as any).score =
-                    Math.round(
-                        (suggestion.getScore() + distanceScore / 2) * 100
-                    ) / 100;
+                (suggestion as any).score = Math.round(distanceScore * 10) / 10;
                 return suggestion;
             })
             .sort((a, b) => {
@@ -39,16 +38,19 @@ export class RangeBasedDistanceScoringService
             });
     }
 
-    private getDistanceScore(distanceInKm: number): number {
-        let score = 0;
+    private getDistanceScore(distanceInKm: number, baseScore: number): number {
+        let score = baseScore;
 
-        // Arbitrary ranges based on PostgreSQL weight categories
-        if (distanceInKm <= 10) {
-            score += 1;
-        } else if (distanceInKm > 10 && distanceInKm < 100) {
-            score += 0.4;
-        } else if (distanceInKm > 100 && distanceInKm < 500) {
-            score += 0.2;
+        // Arbitrary ranges
+        if (distanceInKm > 10 && distanceInKm <= 100) {
+            // The base score decrease of 10%
+            score -= (score * 10) / 100;
+        } else if (distanceInKm > 100 && distanceInKm <= 500) {
+            // The base score decrease of 30%
+            score -= (score * 30) / 100;
+        } else if (distanceInKm > 500 && distanceInKm <= 1000) {
+            // The base score decrease of 50%
+            score -= (score * 50) / 100;
         }
 
         return score;
