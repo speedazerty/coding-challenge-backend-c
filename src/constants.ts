@@ -5,4 +5,5 @@ export const TYPES = {
     CitySuggestionRepository: Symbol.for('CitySuggestionRepository'),
     PostgresConnectionPool: Symbol.for('PostgresConnectionPool'),
     DistanceScoringService: Symbol.for('DistanceScoringService'),
+    SuggestionResultRepository: Symbol.for('SuggestionResultRepository'),
 };

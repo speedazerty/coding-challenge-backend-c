@@ -7,18 +7,29 @@ import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../constants';
 import { Pool } from 'pg';
 import format from 'pg-format';
+import { SuggestionResultRepository } from './SuggestionResultRepository';
 
 @injectable()
 export class PostgresCitySuggestionRepository
     implements CitySuggestionsRepository
 {
     constructor(
-        @inject(TYPES.PostgresConnectionPool) private readonly pool: Pool
+        @inject(TYPES.PostgresConnectionPool) private readonly pool: Pool,
+        @inject(TYPES.SuggestionResultRepository)
+        private readonly cacheRepo: SuggestionResultRepository
     ) {}
 
     public async suggestCities(
         filter: CitySuggestionFilter
     ): Promise<CitySuggestion[]> {
+        const cacheKey = JSON.stringify(filter);
+        const cachedSuggestion = this.cacheRepo.get(cacheKey);
+        if (cachedSuggestion) {
+            // TODO add a logger
+            console.log('retrieved from cache');
+            return cachedSuggestion;
+        }
+
         const query = format(
             'select *, ((%s / cast(length(ascii_name) as decimal) ))  as score ' +
                 'from cities where country_code IN (%L) ' +
@@ -32,7 +43,11 @@ export class PostgresCitySuggestionRepository
 
         const result = await this.pool.query<any>(query);
 
-        return this.buildSuggestionResult(result.rows);
+        const suggestions = this.buildSuggestionResult(result.rows);
+
+        this.cacheRepo.set(cacheKey, suggestions);
+
+        return suggestions;
     }
 
     private getCountryCodeQueryFilter(countryCodes: string[]): string {

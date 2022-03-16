@@ -11,6 +11,7 @@ import { RangeBasedDistanceScoringService } from './infrastructure/service/Range
 
 // load controllers metadata
 import './controllers/SuggestionsController';
+import { InMemorySuggestionResultRepository } from './infrastructure/domain/models/InMemorySuggestionResultRepository';
 
 const kernel = new Container();
 const config = Config.createFromEnvironmentVariables();
@@ -40,6 +41,11 @@ kernel.bind<Pool>(TYPES.PostgresConnectionPool).toDynamicValue(() => {
         ssl: postgresConfig.ssl ? { rejectUnauthorized: false } : false,
     });
 });
+
+// TODO move ttl to config file
+kernel
+    .bind(TYPES.SuggestionResultRepository)
+    .toConstantValue(new InMemorySuggestionResultRepository(900));
 
 kernel.bind(TYPES.DistanceScoringService).to(RangeBasedDistanceScoringService);
 
