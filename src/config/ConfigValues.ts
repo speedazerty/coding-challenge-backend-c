@@ -6,6 +6,7 @@ export interface ConfigValues {
     database: {
         citySuggestionPostgres: {
             connectionString: string;
+            ssl: boolean;
         };
     };
 }

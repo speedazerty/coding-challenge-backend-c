@@ -22,6 +22,7 @@ export class Config {
             database: {
                 citySuggestionPostgres: {
                     connectionString: env('DATABASE_URL'),
+                    ssl: env('DATABASE_SSL') === 'true',
                 },
             },
         });

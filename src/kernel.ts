@@ -37,6 +37,7 @@ const postgresConfig = config.values.database.citySuggestionPostgres;
 kernel.bind<Pool>(TYPES.PostgresConnectionPool).toDynamicValue(() => {
     return new Pool({
         connectionString: postgresConfig.connectionString,
+        ssl: postgresConfig.ssl ? { rejectUnauthorized: false } : false,
     });
 });
 
